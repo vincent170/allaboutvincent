@@ -1,1 +1,1 @@
-https://vinhao2010.github.io/allaboutvincent/#contact
+https://vinhao2010.github.io/allaboutvincent/
