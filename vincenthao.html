@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vincent Hao — Projects</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --yellow: #FFD100;
+      --green: #00FF87;
+      --white: #FFFFFF;
+      --off-white: #CCCCCC;
+      --mid: #888888;
+      --dim: #444444;
+      --faint: #222222;
+      --near-black: #111111;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--faint);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--dim); text-decoration: none;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 48px 48px;
+      padding-top: 100px;
+      border-bottom: 1px solid var(--faint);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 50vw; height: 100%;
+      background: radial-gradient(ellipse at 80% 20%, rgba(255,209,0,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--yellow); margin-bottom: 28px; font-weight: 700;
+      opacity: 0; animation: rise 0.7s 0.1s forwards;
+    }
+    .hero-name {
+      font-size: clamp(72px, 13vw, 180px);
+      font-weight: 700; line-height: 0.88; letter-spacing: -0.04em;
+      margin-bottom: 48px;
+      opacity: 0; animation: rise 0.7s 0.25s forwards;
+    }
+    .hero-name span { color: var(--yellow); }
+    .hero-bottom {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      border-top: 1px solid var(--faint); padding-top: 28px;
+      opacity: 0; animation: rise 0.7s 0.45s forwards;
+    }
+    .hero-desc {
+      font-size: 15px; font-weight: 400; color: var(--mid);
+      max-width: 420px; line-height: 1.7;
+    }
+    .hero-desc strong { color: #fff; font-weight: 700; }
+    .hero-tz { text-align: right; }
+    .hero-tz-label {
+      font-size: 11px; color: var(--dim); font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 4px;
+    }
+    .hero-tz-value { font-size: 26px; color: var(--yellow); letter-spacing: -0.02em; }
+
+    /* status badge */
+    .status-pill {
+      position: absolute; top: 112px; right: 48px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--near-black); border: 1px solid var(--faint); border-radius: 100px;
+      padding: 8px 16px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #fff;
+      opacity: 0; animation: rise 0.7s 0.6s forwards;
+    }
+    .status-dot {
+      width: 7px; height: 7px; background: var(--green);
+      border-radius: 50%; animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--faint);
+    }
+    .about-left { padding: 64px 48px; border-right: 1px solid var(--faint); }
+    .about-right { padding: 64px 48px; }
+
+    .sec-label {
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--dim); margin-bottom: 36px; font-weight: 700; display: block;
+    }
+    .about-body {
+      font-size: 20px; font-weight: 400; line-height: 1.6; color: #aaa;
+    }
+    .about-body strong { color: #fff; font-weight: 700; }
+
+    /* interests list */
+    .interest {
+      display: flex; align-items: center; gap: 20px;
+      padding: 20px 0; border-bottom: 1px solid #181818;
+    }
+    .interest:last-child { border-bottom: none; }
+    .int-num { font-size: 11px; color: var(--dim); font-weight: 700; width: 20px; flex-shrink: 0; }
+    .int-name { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+    .int-tag {
+      margin-left: auto; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim);
+    }
+
+    /* ── PROJECTS ── */
+    .projects { padding: 64px 48px; border-bottom: 1px solid var(--faint); }
+    .projects-hdr {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 48px;
+    }
+    .projects-title {
+      font-size: 52px; font-weight: 700; letter-spacing: -0.04em;
+    }
+    .projects-count {
+      font-size: 11px; color: var(--dim); font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+    }
+
+    .proj-card {
+      display: grid; grid-template-columns: 60px 1fr auto;
+      align-items: start; gap: 40px;
+      padding: 44px 0; border-top: 1px solid var(--faint);
+    }
+    .proj-num { font-size: 13px; color: var(--dim); font-weight: 700; padding-top: 6px; }
+    .proj-name { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 14px; }
+    .proj-body {
+      font-size: 14px; color: #666; font-weight: 400; line-height: 1.7; margin-bottom: 24px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border: 1px solid var(--faint); color: var(--mid);
+    }
+    .proj-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 14px; background: var(--yellow); color: #000;
+      white-space: nowrap; align-self: flex-start;
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--faint);
+    }
+    .contact-left {
+      padding: 80px 48px; border-right: 1px solid var(--faint);
+    }
+    .contact-right { padding: 80px 48px; }
+    .contact-heading {
+      font-size: clamp(52px, 7vw, 88px);
+      font-weight: 700; letter-spacing: -0.04em; line-height: 0.88;
+      margin-bottom: 32px;
+    }
+    .contact-body {
+      font-size: 15px; color: var(--mid); font-weight: 400; line-height: 1.7; margin-bottom: 36px;
+    }
+    .email-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.04em;
+      color: #000; background: var(--yellow);
+      padding: 16px 28px; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .email-btn:hover { opacity: 0.85; }
+    .email-also {
+      display: block; margin-top: 16px; font-size: 12px; color: var(--dim); font-weight: 400;
+    }
+
+    .meta-list { display: flex; flex-direction: column; }
+    .meta-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 20px 0; border-bottom: 1px solid #181818;
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-k { font-size: 11px; color: var(--dim); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .meta-v { font-size: 13px; font-weight: 700; color: #fff; text-align: right; max-width: 60%; }
+    .meta-v.yellow { color: var(--yellow); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .ft { font-size: 11px; color: var(--faint); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 80px 20px 40px; }
+      .status-pill { top: 76px; right: 20px; font-size: 10px; }
+      .hero-bottom { flex-direction: column; gap: 20px; }
+      .hero-tz { text-align: left; }
+      .about { grid-template-columns: 1fr; }
+      .about-left { border-right: none; border-bottom: 1px solid var(--faint); padding: 40px 20px; }
+      .about-right { padding: 40px 20px; }
+      .projects { padding: 40px 20px; }
+      .proj-card { grid-template-columns: 1fr; gap: 16px; }
+      .contact { grid-template-columns: 1fr; }
+      .contact-left { border-right: none; border-bottom: 1px solid var(--faint); padding: 40px 20px; }
+      .contact-right { padding: 40px 20px; }
+      footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Vincent Hao</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      Open to opportunities
+    </div>
+
+    <p class="hero-eyebrow">Portfolio &amp; Projects — London, UK</p>
+
+    <h1 class="hero-name">VINCENT<br><span>HAO</span></h1>
+
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        <strong>15 years old.</strong> Based in London. Currently co-authoring a
+        research paper with the <strong>Royal Society of Science</strong>.
+        Interested in engineering, code, and building things that actually work.
+      </p>
+      <div class="hero-tz">
+        <span class="hero-tz-label">Timezone</span>
+        <span class="hero-tz-value">GMT / BST</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-left">
+      <span class="sec-label">About</span>
+      <p class="about-body">
+        A <strong>15-year-old student</strong> from London with a hands-on approach to
+        engineering and technology. Currently involved in academic research with the
+        <strong>Royal Society of Science</strong>, building hardware from scratch, and
+        pushing into STEM at every opportunity.
+      </p>
+    </div>
+    <div class="about-right">
+      <span class="sec-label">Interests</span>
+      <div>
+        <div class="interest">
+          <span class="int-num">01</span>
+          <span class="int-name">Coding &amp; Software</span>
+          <span class="int-tag">Dev</span>
+        </div>
+        <div class="interest">
+          <span class="int-num">02</span>
+          <span class="int-name">Electronics &amp; Hardware</span>
+          <span class="int-tag">EE</span>
+        </div>
+        <div class="interest">
+          <span class="int-num">03</span>
+          <span class="int-name">CAD &amp; 3D Design</span>
+          <span class="int-tag">Design</span>
+        </div>
+        <div class="interest">
+          <span class="int-num">04</span>
+          <span class="int-name">Research &amp; Science</span>
+          <span class="int-tag">STEM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="projects-hdr">
+      <h2 class="projects-title">Projects</h2>
+      <span class="projects-count">01 project</span>
+    </div>
+
+    <div class="proj-card">
+      <span class="proj-num">01</span>
+      <div>
+        <h3 class="proj-name">Custom Drone</h3>
+        <p class="proj-body">
+          A fully custom-built drone designed and assembled from scratch. Features wireless
+          Bluetooth debugging via the HC-05 module, 6-axis gyroscope and accelerometer
+          stabilisation through the MPU-6050 IMU, and an ESP microcontroller running the
+          flight stack. Powered by 1400KV brushless motors.
+        </p>
+        <div class="tags">
+          <span class="tag">HC-05 Bluetooth</span>
+          <span class="tag">MPU-6050 IMU</span>
+          <span class="tag">ESP MCU</span>
+          <span class="tag">1400KV Motors</span>
+        </div>
+      </div>
+      <span class="proj-badge">In Progress</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-left">
+      <h2 class="contact-heading">GET IN<br>TOUCH</h2>
+      <p class="contact-body">
+        Open to opportunities, collaborations, and interesting projects.
+        Particularly interested in hearing from researchers, engineers, and
+        organisations working in STEM.
+      </p>
+      <a href="mailto:VincentHao100@hotmail.com" class="email-btn">
+        VincentHao100@hotmail.com ↗
+      </a>
+      <span class="email-also">Click to open your mail client</span>
+    </div>
+    <div class="contact-right">
+      <div class="meta-list">
+        <div class="meta-row">
+          <span class="meta-k">Location</span>
+          <span class="meta-v">London, UK</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Timezone</span>
+          <span class="meta-v">GMT / BST — UTC+0 / UTC+1</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Age</span>
+          <span class="meta-v">15</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Current Focus</span>
+          <span class="meta-v">Research Paper — Royal Society of Science</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Email</span>
+          <span class="meta-v yellow">VincentHao100@hotmail.com</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="ft">© 2025 Vincent Hao</span>
+    <span class="ft">London, United Kingdom</span>
+  </footer>
+
+</body>
+</html>
