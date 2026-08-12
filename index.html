@@ -1,392 +1,448 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vincent Hao — Projects</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vincent Hao</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    :root {
-      --yellow: #FFD100;
-      --green: #00FF87;
-      --white: #FFFFFF;
-      --off-white: #CCCCCC;
-      --mid: #888888;
-      --dim: #444444;
-      --faint: #222222;
-      --near-black: #111111;
-    }
+  :root {
+    --paper: #F6F5ED;
+    --paper-deep: #ECEBDE;
+    --moss: #2A3226;
+    --moss-soft: #5B6653;
+    --sage: #74886A;
+    --sage-line: #C7D2BB;
+    --clay: #B08A63;
 
-    html { scroll-behavior: smooth; }
+    --status-live-bg: #FBE0DC; --status-live-fg: #A23B33; --status-live-bd: #F0BFB8;
+    --status-prog-bg: #FCEFCB; --status-prog-fg: #8A6A1E; --status-prog-bd: #F0DFA0;
+    --status-fin-bg: #DCEAD2;  --status-fin-fg: #45633A;  --status-fin-bd: #C3D9B4;
+    --status-tea-bg: #E8E2F0; --status-tea-fg: #6A5590;  --status-tea-bd: #D5C9E8;
+  }
 
-    body {
-      background: #000;
-      color: #fff;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-weight: 700;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+  html[data-theme="dark"] {
+    --paper: #1B211A;
+    --paper-deep: #232A20;
+    --moss: #E7EAE0;
+    --moss-soft: #A8B39C;
+    --sage: #92AC80;
+    --sage-line: #3A4434;
+    --clay: #C79A6B;
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 20px 48px;
-      border-bottom: 1px solid var(--faint);
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(12px);
-    }
-    .nav-logo { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a {
-      color: var(--dim); text-decoration: none;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: #fff; }
+    --status-live-bg: #3A211F; --status-live-fg: #F0A79C; --status-live-bd: #5A2E29;
+    --status-prog-bg: #3A311C; --status-prog-fg: #E8C878; --status-prog-bd: #5A4A28;
+    --status-fin-bg: #223026;  --status-fin-fg: #A9CB96;  --status-fin-bd: #35492F;
+    --status-tea-bg: #2B2536; --status-tea-fg: #C0A8DE;  --status-tea-bd: #453A5A;
+  }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 48px 48px;
-      padding-top: 100px;
-      border-bottom: 1px solid var(--faint);
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; top: 0; right: 0;
-      width: 50vw; height: 100%;
-      background: radial-gradient(ellipse at 80% 20%, rgba(255,209,0,0.04) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-eyebrow {
-      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--yellow); margin-bottom: 28px; font-weight: 700;
-      opacity: 0; animation: rise 0.7s 0.1s forwards;
-    }
-    .hero-name {
-      font-size: clamp(72px, 13vw, 180px);
-      font-weight: 700; line-height: 0.88; letter-spacing: -0.04em;
-      margin-bottom: 48px;
-      opacity: 0; animation: rise 0.7s 0.25s forwards;
-    }
-    .hero-name span { color: var(--yellow); }
-    .hero-bottom {
-      display: flex; justify-content: space-between; align-items: flex-end;
-      border-top: 1px solid var(--faint); padding-top: 28px;
-      opacity: 0; animation: rise 0.7s 0.45s forwards;
-    }
-    .hero-desc {
-      font-size: 15px; font-weight: 400; color: var(--mid);
-      max-width: 420px; line-height: 1.7;
-    }
-    .hero-desc strong { color: #fff; font-weight: 700; }
-    .hero-tz { text-align: right; }
-    .hero-tz-label {
-      font-size: 11px; color: var(--dim); font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 4px;
-    }
-    .hero-tz-value { font-size: 26px; color: var(--yellow); letter-spacing: -0.02em; }
+  html { scroll-behavior: smooth; }
 
-    /* status badge */
-    .status-pill {
-      position: absolute; top: 112px; right: 48px;
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--near-black); border: 1px solid var(--faint); border-radius: 100px;
-      padding: 8px 16px;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #fff;
-      opacity: 0; animation: rise 0.7s 0.6s forwards;
-    }
-    .status-dot {
-      width: 7px; height: 7px; background: var(--green);
-      border-radius: 50%; animation: blink 2s infinite;
-    }
-    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0);    }
-    }
+  body {
+    background: var(--paper);
+    color: var(--moss);
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
 
-    /* ── ABOUT ── */
-    .about {
-      display: grid; grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--faint);
-    }
-    .about-left { padding: 64px 48px; border-right: 1px solid var(--faint); }
-    .about-right { padding: 64px 48px; }
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
 
-    .sec-label {
-      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--dim); margin-bottom: 36px; font-weight: 700; display: block;
-    }
-    .about-body {
-      font-size: 20px; font-weight: 400; line-height: 1.6; color: #aaa;
-    }
-    .about-body strong { color: #fff; font-weight: 700; }
+  a { color: inherit; }
 
-    /* interests list */
-    .interest {
-      display: flex; align-items: center; gap: 20px;
-      padding: 20px 0; border-bottom: 1px solid #181818;
-    }
-    .interest:last-child { border-bottom: none; }
-    .int-num { font-size: 11px; color: var(--dim); font-weight: 700; width: 20px; flex-shrink: 0; }
-    .int-name { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
-    .int-tag {
-      margin-left: auto; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim);
-    }
+  .fern { position: absolute; pointer-events: none; opacity: 0.5; }
 
-    /* ── PROJECTS ── */
-    .projects { padding: 64px 48px; border-bottom: 1px solid var(--faint); }
-    .projects-hdr {
-      display: flex; justify-content: space-between; align-items: baseline;
-      margin-bottom: 48px;
-    }
-    .projects-title {
-      font-size: 52px; font-weight: 700; letter-spacing: -0.04em;
-    }
-    .projects-count {
-      font-size: 11px; color: var(--dim); font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase;
-    }
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 48px;
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--sage-line);
+  }
+  .nav-logo { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: 13px; color: var(--moss-soft);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--moss); }
+  .nav-clock {
+    font-size: 12px; color: var(--moss-soft); font-variant-numeric: tabular-nums;
+    border: 1px solid var(--sage-line); border-radius: 100px; padding: 5px 12px;
+  }
+  .theme-toggle {
+    background: none; border: 1px solid var(--sage-line); border-radius: 100px;
+    width: 32px; height: 32px; cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--moss);
+  }
 
-    .proj-card {
-      display: grid; grid-template-columns: 60px 1fr auto;
-      align-items: start; gap: 40px;
-      padding: 44px 0; border-top: 1px solid var(--faint);
-    }
-    .proj-num { font-size: 13px; color: var(--dim); font-weight: 700; padding-top: 6px; }
-    .proj-name { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 14px; }
-    .proj-body {
-      font-size: 14px; color: #666; font-weight: 400; line-height: 1.7; margin-bottom: 24px;
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 5px 12px; border: 1px solid var(--faint); color: var(--mid);
-    }
-    .proj-badge {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 6px 14px; background: var(--yellow); color: #000;
-      white-space: nowrap; align-self: flex-start;
-    }
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 100px 48px 80px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--sage-line);
+  }
+  .hero-inner { max-width: 780px; }
+  .hero-kicker { font-size: 13px; color: var(--sage); margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(44px, 7vw, 76px); line-height: 1.05; margin-bottom: 26px; }
+  .hero p { font-size: 17px; color: var(--moss-soft); max-width: 560px; }
+  .fern-hero { top: 40px; right: -20px; width: 260px; height: 340px; }
 
-    /* ── CONTACT ── */
-    .contact {
-      display: grid; grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--faint);
-    }
-    .contact-left {
-      padding: 80px 48px; border-right: 1px solid var(--faint);
-    }
-    .contact-right { padding: 80px 48px; }
-    .contact-heading {
-      font-size: clamp(52px, 7vw, 88px);
-      font-weight: 700; letter-spacing: -0.04em; line-height: 0.88;
-      margin-bottom: 32px;
-    }
-    .contact-body {
-      font-size: 15px; color: var(--mid); font-weight: 400; line-height: 1.7; margin-bottom: 36px;
-    }
-    .email-btn {
-      display: inline-flex; align-items: center; gap: 12px;
-      font-size: 14px; font-weight: 700; letter-spacing: 0.04em;
-      color: #000; background: var(--yellow);
-      padding: 16px 28px; text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .email-btn:hover { opacity: 0.85; }
-    .email-also {
-      display: block; margin-top: 16px; font-size: 12px; color: var(--dim); font-weight: 400;
-    }
+  /* ── ABOUT ── */
+  .about {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px;
+    padding: 72px 48px; border-bottom: 1px solid var(--sage-line);
+  }
+  .sec-label {
+    display: block; font-size: 13px; color: var(--sage); margin-bottom: 22px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .about-body { font-size: 18px; color: var(--moss-soft); max-width: 480px; }
+  .about-body strong { color: var(--moss); font-weight: 600; }
+  .about-body p + p { margin-top: 16px; }
 
-    .meta-list { display: flex; flex-direction: column; }
-    .meta-row {
-      display: flex; justify-content: space-between; align-items: baseline;
-      padding: 20px 0; border-bottom: 1px solid #181818;
-    }
-    .meta-row:last-child { border-bottom: none; }
-    .meta-k { font-size: 11px; color: var(--dim); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-    .meta-v { font-size: 13px; font-weight: 700; color: #fff; text-align: right; max-width: 60%; }
-    .meta-v.yellow { color: var(--yellow); }
+  .interest-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 16px 0; border-bottom: 1px solid var(--sage-line);
+  }
+  .interest-row:first-child { padding-top: 0; }
+  .interest-row:last-child { border-bottom: none; }
+  .interest-name { font-size: 16px; font-weight: 500; }
+  .interest-note { font-size: 13px; color: var(--moss-soft); }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 28px 48px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .ft { font-size: 11px; color: var(--faint); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  /* ── PROJECTS ── */
+  .projects { padding: 72px 48px; border-bottom: 1px solid var(--sage-line); }
+  .projects-title { font-size: 40px; margin-bottom: 8px; }
+  .projects-sub { font-size: 14px; color: var(--moss-soft); margin-bottom: 40px; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 800px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 80px 20px 40px; }
-      .status-pill { top: 76px; right: 20px; font-size: 10px; }
-      .hero-bottom { flex-direction: column; gap: 20px; }
-      .hero-tz { text-align: left; }
-      .about { grid-template-columns: 1fr; }
-      .about-left { border-right: none; border-bottom: 1px solid var(--faint); padding: 40px 20px; }
-      .about-right { padding: 40px 20px; }
-      .projects { padding: 40px 20px; }
-      .proj-card { grid-template-columns: 1fr; gap: 16px; }
-      .contact { grid-template-columns: 1fr; }
-      .contact-left { border-right: none; border-bottom: 1px solid var(--faint); padding: 40px 20px; }
-      .contact-right { padding: 40px 20px; }
-      footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
-    }
-  </style>
+  .proj-group { margin-bottom: 48px; }
+  .proj-group:last-child { margin-bottom: 0; }
+  .proj-group-title {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--moss-soft); margin-bottom: 4px; display: flex; align-items: center; gap: 10px;
+  }
+  .proj-group-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot-live { background: var(--status-live-fg); }
+  .dot-prog { background: var(--status-prog-fg); }
+  .dot-fin { background: var(--status-fin-fg); }
+
+  .proj-card {
+    padding: 32px 0; border-top: 1px solid var(--sage-line);
+    display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: start;
+  }
+  .proj-name { font-size: 24px; margin-bottom: 10px; }
+  .proj-body { font-size: 14.5px; color: var(--moss-soft); max-width: 560px; margin-bottom: 16px; }
+  .proj-meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .tag {
+    font-size: 11px; color: var(--moss-soft); border: 1px solid var(--sage-line);
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .proj-link {
+    font-size: 12.5px; color: var(--sage); text-decoration: none; border-bottom: 1px solid var(--sage);
+    padding-bottom: 1px;
+  }
+  .proj-status {
+    font-size: 11.5px; font-weight: 500; white-space: nowrap;
+    border: 1px solid; border-radius: 100px;
+    padding: 6px 14px; align-self: start;
+  }
+  .status-live { background: var(--status-live-bg); color: var(--status-live-fg); border-color: var(--status-live-bd); }
+  .status-progress { background: var(--status-prog-bg); color: var(--status-prog-fg); border-color: var(--status-prog-bd); }
+  .status-finished { background: var(--status-fin-bg); color: var(--status-fin-fg); border-color: var(--status-fin-bd); }
+  .status-teaser { background: var(--status-tea-bg); color: var(--status-tea-fg); border-color: var(--status-tea-bd); }
+
+  /* ── CONTACT ── */
+  .contact { padding: 80px 48px; }
+  .contact-inner { max-width: 640px; }
+  .contact h2 { font-size: 44px; margin-bottom: 20px; }
+  .contact p { font-size: 16px; color: var(--moss-soft); margin-bottom: 32px; max-width: 480px; }
+
+  .contact-btn {
+    font-size: 14px; font-weight: 500; color: var(--paper);
+    background: var(--moss); border: none; border-radius: 100px;
+    padding: 14px 28px; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .contact-btn:hover { background: var(--sage); }
+
+  .contact-meta { margin-top: 40px; display: flex; gap: 36px; font-size: 13px; color: var(--moss-soft); }
+  .contact-meta strong { display: block; color: var(--moss); font-weight: 500; margin-bottom: 4px; }
+
+  /* ── MODAL ── */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(20,24,18,0.4);
+    z-index: 100; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--paper); border: 1px solid var(--sage-line); border-radius: 12px;
+    padding: 32px; width: 100%; max-width: 400px;
+  }
+  .modal h3 { font-size: 22px; margin-bottom: 6px; }
+  .modal p.hint { font-size: 13px; color: var(--moss-soft); margin-bottom: 22px; }
+  .modal label { display: block; font-size: 12px; color: var(--moss-soft); margin-bottom: 6px; margin-top: 16px; }
+  .modal label:first-of-type { margin-top: 0; }
+  .modal input, .modal textarea {
+    width: 100%; font-family: inherit; font-size: 14px; color: var(--moss);
+    background: var(--paper-deep); border: 1px solid var(--sage-line); border-radius: 6px;
+    padding: 10px 12px; resize: vertical;
+  }
+  .modal textarea { min-height: 90px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+  .modal-cancel { background: none; border: none; font-size: 13px; color: var(--moss-soft); cursor: pointer; }
+  .modal-send { background: var(--moss); color: var(--paper); border: none; border-radius: 100px; padding: 10px 20px; font-size: 13px; cursor: pointer; }
+
+  footer {
+    padding: 26px 48px; border-top: 1px solid var(--sage-line);
+    display: flex; justify-content: space-between; font-size: 12px; color: var(--moss-soft);
+  }
+
+  @media (max-width: 800px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 64px 20px 48px; }
+    .fern-hero { display: none; }
+    .about { grid-template-columns: 1fr; padding: 48px 20px; gap: 40px; }
+    .projects { padding: 48px 20px; }
+    .proj-card { grid-template-columns: 1fr; }
+    .contact { padding: 56px 20px; }
+    .contact-meta { flex-direction: column; gap: 20px; }
+    footer { padding: 20px; flex-direction: column; gap: 6px; }
+  }
+</style>
 </head>
 <body>
 
-  <nav>
-    <div class="nav-logo">Vincent Hao</div>
+<nav>
+  <div class="nav-logo">Vincent Hao</div>
+  <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-  </nav>
+    <span class="nav-clock" id="londonClock">-- London</span>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="status-pill">
-      <span class="status-dot"></span>
-      Open to opportunities
+<section class="hero">
+  <svg class="fern fern-hero" width="260" height="340" viewBox="0 0 260 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M130 340 C130 260 120 200 100 150" stroke="#74886A" stroke-width="1.5"/>
+    <path d="M114 240 C90 230 75 215 65 195" stroke="#74886A" stroke-width="1.2"/>
+    <path d="M118 210 C140 200 155 185 165 165" stroke="#74886A" stroke-width="1.2"/>
+    <path d="M108 180 C85 172 72 160 63 145" stroke="#74886A" stroke-width="1.2"/>
+    <path d="M112 150 C132 143 145 130 153 113" stroke="#74886A" stroke-width="1.2"/>
+    <path d="M103 120 C82 115 70 105 62 92" stroke="#74886A" stroke-width="1.2"/>
+    <path d="M107 95 C124 90 135 79 141 65" stroke="#74886A" stroke-width="1.2"/>
+  </svg>
+  <div class="hero-inner">
+    <p class="hero-kicker">London — student, still figuring most of this out</p>
+    <h1>Vincent Hao</h1>
+    <p>15, based in London. I like building things — mostly electronics and code, sometimes because a project needs it, sometimes because I got curious and didn't stop. This page is a running log of what I've made.</p>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div>
+    <span class="sec-label">About</span>
+    <div class="about-body">
+      <p>I like taking things apart to understand how they work, then putting them back together — usually a bit better, occasionally worse. Most of what's on this page came out of that habit.</p>
+      <p><strong>Outside of STEM,</strong> I play piano (grade 8) and try to get outside as much as London weather allows. The colours on this site are a small nod to that.</p>
     </div>
-
-    <p class="hero-eyebrow">Portfolio &amp; Projects — London, UK</p>
-
-    <h1 class="hero-name">VINCENT<br><span>HAO</span></h1>
-
-    <div class="hero-bottom">
-      <p class="hero-desc">
-        <strong>15 years old.</strong> Based in London. Currently co-authoring a
-        research paper with the <strong>Royal Society of Science</strong>.
-        Interested in engineering, code, and building things that actually work.
-      </p>
-      <div class="hero-tz">
-        <span class="hero-tz-label">Timezone</span>
-        <span class="hero-tz-value">GMT / BST</span>
-      </div>
+  </div>
+  <div>
+    <span class="sec-label">Interests</span>
+    <div>
+      <div class="interest-row"><span class="interest-name">Electronics & embedded systems</span><span class="interest-note">firmware, PCBs</span></div>
+      <div class="interest-row"><span class="interest-name">Coding</span><span class="interest-note">Python, C++, a bit of everything</span></div>
+      <div class="interest-row"><span class="interest-name">CAD & 3D printing</span><span class="interest-note">enclosures, mostly</span></div>
+      <div class="interest-row"><span class="interest-name">Research</span><span class="interest-note">Royal Society project</span></div>
+      <div class="interest-row"><span class="interest-name">Piano</span><span class="interest-note">grade 8</span></div>
+      <div class="interest-row"><span class="interest-name">Nature</span><span class="interest-note">parks, walks, anything green</span></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="about-left">
-      <span class="sec-label">About</span>
-      <p class="about-body">
-        A <strong>15-year-old student</strong> from London with a hands-on approach to
-        engineering and technology. Currently involved in academic research with the
-        <strong>Royal Society of Science</strong>, building hardware from scratch, and
-        pushing into STEM at every opportunity.
-      </p>
-    </div>
-    <div class="about-right">
-      <span class="sec-label">Interests</span>
+<section class="projects" id="projects">
+  <h2 class="projects-title">Projects</h2>
+  <p class="projects-sub">Sorted by how done they are, which is not always very.</p>
+
+  <div class="proj-group">
+    <div class="proj-group-title"><span class="proj-group-dot dot-live"></span>Live / ongoing</div>
+
+    <div class="proj-card">
       <div>
-        <div class="interest">
-          <span class="int-num">01</span>
-          <span class="int-name">Coding &amp; Software</span>
-          <span class="int-tag">Dev</span>
-        </div>
-        <div class="interest">
-          <span class="int-num">02</span>
-          <span class="int-name">Electronics &amp; Hardware</span>
-          <span class="int-tag">EE</span>
-        </div>
-        <div class="interest">
-          <span class="int-num">03</span>
-          <span class="int-name">CAD &amp; 3D Design</span>
-          <span class="int-tag">Design</span>
-        </div>
-        <div class="interest">
-          <span class="int-num">04</span>
-          <span class="int-name">Research &amp; Science</span>
-          <span class="int-tag">STEM</span>
+        <h3 class="proj-name">Home server</h3>
+        <p class="proj-body">An old Lenovo IdeaPad — about 8 years old, low-end even when it was new — repurposed with an SSD bolted on for storage. Runs a self-hosted photo library on Docker, plus whatever else I decide to try out that week.</p>
+        <div class="proj-meta">
+          <span class="tag">Linux</span><span class="tag">Docker</span><span class="tag">Immich</span><span class="tag">Server admin</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section class="projects" id="projects">
-    <div class="projects-hdr">
-      <h2 class="projects-title">Projects</h2>
-      <span class="projects-count">01 project</span>
+      <span class="proj-status status-live">Live</span>
     </div>
 
     <div class="proj-card">
-      <span class="proj-num">01</span>
       <div>
-        <h3 class="proj-name">Custom Drone</h3>
-        <p class="proj-body">
-          A fully custom-built drone designed and assembled from scratch. Features wireless
-          Bluetooth debugging via the HC-05 module, 6-axis gyroscope and accelerometer
-          stabilisation through the MPU-6050 IMU, and an ESP microcontroller running the
-          flight stack. Powered by 1400KV brushless motors.
-        </p>
-        <div class="tags">
-          <span class="tag">HC-05 Bluetooth</span>
-          <span class="tag">MPU-6050 IMU</span>
-          <span class="tag">ESP MCU</span>
-          <span class="tag">1400KV Motors</span>
+        <h3 class="proj-name">Refurbishing old laptops</h3>
+        <p class="proj-body">My school was about to send a batch of old laptops to landfill. I asked if I could take them instead, wiped and repaired what I could, and passed them on — some sold cheaply, some given to people who needed a laptop and couldn't afford one. Mostly about keeping usable hardware out of e-waste.</p>
+        <div class="proj-meta">
+          <span class="tag">Hardware repair</span><span class="tag">E-waste</span><span class="tag">Community</span>
         </div>
       </div>
-      <span class="proj-badge">In Progress</span>
+      <span class="proj-status status-live">Ongoing</span>
     </div>
-  </section>
+  </div>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="contact-left">
-      <h2 class="contact-heading">GET IN<br>TOUCH</h2>
-      <p class="contact-body">
-        Open to opportunities, collaborations, and interesting projects.
-        Particularly interested in hearing from researchers, engineers, and
-        organisations working in STEM.
-      </p>
-      <a href="mailto:VincentHao100@hotmail.com" class="email-btn">
-        VincentHao100@hotmail.com ↗
-      </a>
-      <span class="email-also">Click to open your mail client</span>
-    </div>
-    <div class="contact-right">
-      <div class="meta-list">
-        <div class="meta-row">
-          <span class="meta-k">Location</span>
-          <span class="meta-v">London, UK</span>
-        </div>
-        <div class="meta-row">
-          <span class="meta-k">Timezone</span>
-          <span class="meta-v">GMT / BST — UTC+0 / UTC+1</span>
-        </div>
-        <div class="meta-row">
-          <span class="meta-k">Age</span>
-          <span class="meta-v">15</span>
-        </div>
-        <div class="meta-row">
-          <span class="meta-k">Current Focus</span>
-          <span class="meta-v">Research Paper — Royal Society of Science</span>
-        </div>
-        <div class="meta-row">
-          <span class="meta-k">Email</span>
-          <span class="meta-v yellow">VincentHao100@hotmail.com</span>
+  <div class="proj-group">
+    <div class="proj-group-title"><span class="proj-group-dot dot-prog"></span>In progress</div>
+
+    <div class="proj-card">
+      <div>
+        <h3 class="proj-name">Custom drone</h3>
+        <p class="proj-body">Built from scratch — ESP microcontroller running the flight stack, MPU-6050 for stabilisation, HC-05 for wireless debugging, 1400KV brushless motors. Still tuning it, still occasionally crashing it.</p>
+        <div class="proj-meta">
+          <span class="tag">Embedded</span><span class="tag">IMU / flight control</span><span class="tag">Bluetooth</span>
         </div>
       </div>
+      <span class="proj-status status-progress">In progress</span>
     </div>
-  </section>
 
-  <footer>
-    <span class="ft">© 2025 Vincent Hao</span>
-    <span class="ft">London, United Kingdom</span>
-  </footer>
+    <div class="proj-card">
+      <div>
+        <h3 class="proj-name">Royal Society research project</h3>
+        <p class="proj-body">Looking at how roof pitch angle affects heat loss in residential buildings, using a Raspberry Pi rig for the sensing side. A couple more experiments to run before it's ready to submit.</p>
+        <div class="proj-meta">
+          <span class="tag">Raspberry Pi</span><span class="tag">Sensors</span><span class="tag">Research</span>
+          <a class="proj-link" href="https://github.com/vincent170/raspi-smarthome" target="_blank" rel="noopener">github.com/vincent170/raspi-smarthome ↗</a>
+        </div>
+      </div>
+      <span class="proj-status status-progress">In progress</span>
+    </div>
+
+    <div class="proj-card">
+      <div>
+        <h3 class="proj-name">Something about typing</h3>
+        <p class="proj-body">Still under wraps. Involves a keyboard and more data logging than is strictly necessary. More soon.</p>
+        <div class="proj-meta"><span class="tag">???</span></div>
+      </div>
+      <span class="proj-status status-teaser">Teaser</span>
+    </div>
+  </div>
+
+  <div class="proj-group">
+    <div class="proj-group-title"><span class="proj-group-dot dot-fin"></span>Finished</div>
+
+    <div class="proj-card">
+      <div>
+        <h3 class="proj-name">DIY e-reader</h3>
+        <p class="proj-body">An e-ink reader built around an ESP32-S3, running GxEPD2, in a case I designed and 3D-printed myself. Took a while to get the display driver working properly, but it's done and reading books now.</p>
+        <div class="proj-meta">
+          <span class="tag">CAD</span><span class="tag">3D printing</span><span class="tag">Electronics</span><span class="tag">Firmware</span>
+          <a class="proj-link" href="https://github.com/vincent170/esp-ereader" target="_blank" rel="noopener">github.com/vincent170/esp-ereader ↗</a>
+        </div>
+      </div>
+      <span class="proj-status status-finished">Finished</span>
+    </div>
+
+    <div class="proj-card">
+      <div>
+        <h3 class="proj-name">Emotion detector</h3>
+        <p class="proj-body">A webcam-based tool that reads facial expressions and estimates mood in real time. Mostly accurate — sometimes convinced I'm annoyed when I'm just concentrating.</p>
+        <div class="proj-meta">
+          <span class="tag">Python</span><span class="tag">Computer vision</span><span class="tag">Machine learning</span>
+          <a class="proj-link" href="https://github.com/vincent170/emotion-detector" target="_blank" rel="noopener">github.com/vincent170/emotion-detector ↗</a>
+        </div>
+      </div>
+      <span class="proj-status status-finished">Finished</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <span class="sec-label">Contact</span>
+    <h2>Say hello</h2>
+    <p>Based in London — happy to talk about research, hardware, or anywhere nice with trees nearby. If you've got a project worth comparing notes on, get in touch.</p>
+    <button class="contact-btn" onclick="document.getElementById('modalBackdrop').classList.add('open')">Get in touch</button>
+    <div class="contact-meta">
+      <div><strong>Location</strong>London, UK</div>
+      <div><strong>Timezone</strong>GMT / BST</div>
+      <div><strong>Focus</strong>Royal Society research paper</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Vincent Hao</span>
+  <span>London, United Kingdom</span>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <h3>Send a message</h3>
+    <p class="hint">Fill this in and it'll open in your mail app, addressed to me.</p>
+    <label for="mName">Your name</label>
+    <input type="text" id="mName" placeholder="Jane Smith">
+    <label for="mEmail">Your email</label>
+    <input type="email" id="mEmail" placeholder="you@example.com">
+    <label for="mMessage">Message</label>
+    <textarea id="mMessage" placeholder="What's this about?"></textarea>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="document.getElementById('modalBackdrop').classList.remove('open')">Cancel</button>
+      <button class="modal-send" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function sendMessage() {
+    const name = document.getElementById('mName').value || 'there';
+    const from = document.getElementById('mEmail').value;
+    const msg = document.getElementById('mMessage').value;
+    const to = 'VincentHao100@hotmail.com';
+    const subject = encodeURIComponent('Hello from ' + name);
+    const body = encodeURIComponent(msg + (from ? '\n\n— ' + name + ' (' + from + ')' : '\n\n— ' + name));
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    document.getElementById('modalBackdrop').classList.remove('open');
+  }
+  document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+    if (e.target.id === 'modalBackdrop') e.target.classList.remove('open');
+  });
+
+  function toggleTheme() {
+    const root = document.documentElement;
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeToggle').textContent = isDark ? '🌙' : '☀️';
+  }
+
+  function updateClock() {
+    const el = document.getElementById('londonClock');
+    const now = new Date();
+    const time = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false
+    }).format(now);
+    el.textContent = time + ' London';
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
 
 </body>
 </html>
