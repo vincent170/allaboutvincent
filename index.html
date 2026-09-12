@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,14 +116,14 @@
   .about-body strong { color: var(--moss); font-weight: 600; }
   .about-body p + p { margin-top: 16px; }
 
-  .interest-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 16px 0; border-bottom: 1px solid var(--sage-line);
+  .interest-list {
+    display: flex; flex-wrap: wrap; gap: 10px;
   }
-  .interest-row:first-child { padding-top: 0; }
-  .interest-row:last-child { border-bottom: none; }
-  .interest-name { font-size: 16px; font-weight: 500; }
-  .interest-note { font-size: 13px; color: var(--moss-soft); }
+  .interest-chip {
+    font-size: 14px; color: var(--moss);
+    border: 1px solid var(--sage-line); border-radius: 100px;
+    padding: 8px 16px;
+  }
 
   /* ── PROJECTS ── */
   .projects { padding: 72px 48px; border-bottom: 1px solid var(--sage-line); }
@@ -237,7 +237,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <span class="nav-clock" id="londonClock">-- London</span>
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
   </div>
 </nav>
 
@@ -254,7 +254,7 @@
   <div class="hero-inner">
     <p class="hero-kicker">London — student, still figuring most of this out</p>
     <h1>Vincent Hao</h1>
-    <p>15, based in London. I like building things — mostly electronics and code, sometimes because a project needs it, sometimes because I got curious and didn't stop. This page is a running log of what I've made.</p>
+    <p>15, based in London. I like to build things — mostly electronics and code, and a few other things besides. This page is just a log of what I'm up to in my free time.</p>
   </div>
 </section>
 
@@ -262,26 +262,29 @@
   <div>
     <span class="sec-label">About</span>
     <div class="about-body">
-      <p>I like taking things apart to understand how they work, then putting them back together — usually a bit better, occasionally worse. Most of what's on this page came out of that habit.</p>
-      <p><strong>Outside of STEM,</strong> I play piano (grade 8) and try to get outside as much as London weather allows. The colours on this site are a small nod to that.</p>
+      <p>I wasn't especially sporty growing up, so I spent a lot of my free time messing around with Scratch. That slowly turned into an interest in real electronics, and I've been building things ever since.</p>
+      <p><strong>Outside of STEM,</strong> I swim recreationally and play a bit of tennis. I also play piano (grade 8) and spend a fair amount of time outdoors — the colours on this site are a small nod to that.</p>
     </div>
   </div>
   <div>
     <span class="sec-label">Interests</span>
-    <div>
-      <div class="interest-row"><span class="interest-name">Electronics & embedded systems</span><span class="interest-note">firmware, PCBs</span></div>
-      <div class="interest-row"><span class="interest-name">Coding</span><span class="interest-note">Python, C++, a bit of everything</span></div>
-      <div class="interest-row"><span class="interest-name">CAD & 3D printing</span><span class="interest-note">enclosures, mostly</span></div>
-      <div class="interest-row"><span class="interest-name">Research</span><span class="interest-note">Royal Society project</span></div>
-      <div class="interest-row"><span class="interest-name">Piano</span><span class="interest-note">grade 8</span></div>
-      <div class="interest-row"><span class="interest-name">Nature</span><span class="interest-note">parks, walks, anything green</span></div>
+    <div class="interest-list">
+      <span class="interest-chip">Electronics</span>
+      <span class="interest-chip">Coding</span>
+      <span class="interest-chip">CAD & 3D printing</span>
+      <span class="interest-chip">Research</span>
+      <span class="interest-chip">Piano</span>
+      <span class="interest-chip">Swimming</span>
+      <span class="interest-chip">Tennis</span>
+      <span class="interest-chip">Nature & walks</span>
+      <span class="interest-chip">Reading</span>
     </div>
   </div>
 </section>
 
 <section class="projects" id="projects">
   <h2 class="projects-title">Projects</h2>
-  <p class="projects-sub">Sorted by how done they are, which is not always very.</p>
+  <p class="projects-sub">A few things I've built, more or less finished.</p>
 
   <div class="proj-group">
     <div class="proj-group-title"><span class="proj-group-dot dot-live"></span>Live / ongoing</div>
@@ -289,23 +292,12 @@
     <div class="proj-card">
       <div>
         <h3 class="proj-name">Home server</h3>
-        <p class="proj-body">An old Lenovo IdeaPad — about 8 years old, low-end even when it was new — repurposed with an SSD bolted on for storage. Runs a self-hosted photo library on Docker, plus whatever else I decide to try out that week.</p>
+        <p class="proj-body">An old Lenovo IdeaPad, repurposed with an extra SSD for storage. Runs a self-hosted photo library on Docker, plus whatever else I decide to try out that week.</p>
         <div class="proj-meta">
-          <span class="tag">Linux</span><span class="tag">Docker</span><span class="tag">Immich</span><span class="tag">Server admin</span>
+          <span class="tag">Linux</span><span class="tag">Docker</span><span class="tag">Immich</span>
         </div>
       </div>
       <span class="proj-status status-live">Live</span>
-    </div>
-
-    <div class="proj-card">
-      <div>
-        <h3 class="proj-name">Refurbishing old laptops</h3>
-        <p class="proj-body">My school was about to send a batch of old laptops to landfill. I asked if I could take them instead, wiped and repaired what I could, and passed them on — some sold cheaply, some given to people who needed a laptop and couldn't afford one. Mostly about keeping usable hardware out of e-waste.</p>
-        <div class="proj-meta">
-          <span class="tag">Hardware repair</span><span class="tag">E-waste</span><span class="tag">Community</span>
-        </div>
-      </div>
-      <span class="proj-status status-live">Ongoing</span>
     </div>
   </div>
 
@@ -315,7 +307,7 @@
     <div class="proj-card">
       <div>
         <h3 class="proj-name">Custom drone</h3>
-        <p class="proj-body">Built from scratch — ESP microcontroller running the flight stack, MPU-6050 for stabilisation, HC-05 for wireless debugging, 1400KV brushless motors. Still tuning it, still occasionally crashing it.</p>
+        <p class="proj-body">Built from scratch — ESP microcontroller running the flight stack, MPU-6050 for stabilisation, HC-05 for wireless debugging. Still tuning it, still occasionally crashing it.</p>
         <div class="proj-meta">
           <span class="tag">Embedded</span><span class="tag">IMU / flight control</span><span class="tag">Bluetooth</span>
         </div>
@@ -341,10 +333,21 @@
 
     <div class="proj-card">
       <div>
-        <h3 class="proj-name">KeyBar</h3>
-        <p class="proj-body">A macOS menu bar app built with Swift and SwiftUI that tracks your live typing speed, WPM, and daily statistics in real time using low-level global event taps.</p>
+        <h3 class="proj-name">Refurbishing old laptops</h3>
+        <p class="proj-body">My school was about to send a batch of old laptops to landfill, so I asked if I could take them instead. I repaired what I could and sold them on at low prices — made a bit over £1,100 from it in the end, mostly going back into parts and tools.</p>
         <div class="proj-meta">
-          <span class="tag">Swift</span><span class="tag">SwiftUI</span><span class="tag">macOS</span><span class="tag">Combine</span>
+          <span class="tag">Hardware repair</span><span class="tag">E-waste</span>
+        </div>
+      </div>
+      <span class="proj-status status-finished">Finished</span>
+    </div>
+
+    <div class="proj-card">
+      <div>
+        <h3 class="proj-name">KeyBar</h3>
+        <p class="proj-body">A small macOS menu bar app that tracks typing speed and daily stats using global event taps. Built with Swift and SwiftUI.</p>
+        <div class="proj-meta">
+          <span class="tag">Swift</span><span class="tag">SwiftUI</span><span class="tag">macOS</span>
           <a class="proj-link" href="https://github.com/vincent170/keybar" target="_blank" rel="noopener">github.com/vincent170/keybar ↗</a>
         </div>
       </div>
@@ -354,9 +357,9 @@
     <div class="proj-card">
       <div>
         <h3 class="proj-name">DIY e-reader</h3>
-        <p class="proj-body">An e-ink reader built around an ESP32-S3, running GxEPD2, in a case I designed and 3D-printed myself. Took a while to get the display driver working properly, but it's done and reading books now.</p>
+        <p class="proj-body">An e-ink reader built around an ESP32-S3, in a case I designed and 3D-printed. Took a while to get the display driver working properly, but it's done and reading books now.</p>
         <div class="proj-meta">
-          <span class="tag">CAD</span><span class="tag">3D printing</span><span class="tag">Electronics</span><span class="tag">Firmware</span>
+          <span class="tag">CAD</span><span class="tag">3D printing</span><span class="tag">Firmware</span>
           <a class="proj-link" href="https://github.com/vincent170/esp-ereader" target="_blank" rel="noopener">github.com/vincent170/esp-ereader ↗</a>
         </div>
       </div>
@@ -366,9 +369,9 @@
     <div class="proj-card">
       <div>
         <h3 class="proj-name">Emotion detector</h3>
-        <p class="proj-body">A webcam-based tool that reads facial expressions and estimates mood in real time. Mostly accurate — sometimes convinced I'm annoyed when I'm just concentrating.</p>
+        <p class="proj-body">A small webcam tool that reads facial expressions and estimates mood in real time. Mostly accurate — sometimes convinced I'm annoyed when I'm just concentrating.</p>
         <div class="proj-meta">
-          <span class="tag">Python</span><span class="tag">Computer vision</span><span class="tag">Machine learning</span>
+          <span class="tag">Python</span><span class="tag">Computer vision</span>
           <a class="proj-link" href="https://github.com/vincent170/emotion-detector" target="_blank" rel="noopener">github.com/vincent170/emotion-detector ↗</a>
         </div>
       </div>
